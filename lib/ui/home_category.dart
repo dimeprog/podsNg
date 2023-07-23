@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podcast_search/podcast_search.dart';
+import 'package:podsonly/ui/genre_screen.dart';
 import 'package:podsonly/ui/podcast_details.dart';
 import 'package:podsonly/ui/providers/podcast_provider.dart';
 import 'package:podsonly/ui/temp_api_ui.dart';
@@ -28,8 +29,10 @@ class HomeCategory extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
+                if (genre.isEmpty) return;   
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const TempAPIUI()));
+                    MaterialPageRoute(
+                        builder: (context) => GenreScreen(genre: genre)));
               },
               child: const Text('See All'),
             ),

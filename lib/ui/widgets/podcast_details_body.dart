@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:podcast_search/podcast_search.dart';
+import 'package:podsonly/ui/episode_detail.dart';
 import 'package:podsonly/ui/providers/audio_player_provider.dart';
 import 'package:podsonly/ui/providers/hello_world_provider.dart';
 import 'package:rich_readmore/rich_readmore.dart';
@@ -29,6 +30,7 @@ class _PodcastDetailsBodyState extends ConsumerState<PodcastDetailsBody> {
   @override
   void initState() {
     super.initState();
+  
   }
 
   @override
@@ -132,20 +134,32 @@ class _PodcastDetailsBodyState extends ConsumerState<PodcastDetailsBody> {
                 return Column(
                   children: [
                     ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                EpisodeDetailScreen(episode: episode),
+                          ),
+                        );
+                      },
                       contentPadding: EdgeInsets.zero,
-                      leading: Image.network(
-                        getEpisodeImageUrl(episode),
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        },
-                        fit: BoxFit.cover,
+                      leading: SizedBox(
                         height: 60,
                         width: 60,
+                        child: Image.network(
+                          getEpisodeImageUrl(episode),
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          },
+                          fit: BoxFit.cover,
+                          height: 60,
+                          width: 60,
+                        ),
                       ),
                       title: Text(
                         episode.title,
